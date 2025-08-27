@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 const Datepicker = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
@@ -14,11 +14,11 @@ const Datepicker = () => {
 
   const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-  const daysInMonth = (year, month) =>
+  const daysInMonth = (year: number, month: number) =>
     new Date(year, month + 1, 0).getDate();
 
   const calendarDays = useMemo(() => {
-    const days = [];
+    const days: Array<{ date: Date; otherMonth: boolean }> = [];
     const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
     
     // previous month days
@@ -76,13 +76,13 @@ const Datepicker = () => {
     }
   };
 
-  const selectDate = (day) => {
+  const selectDate = (day: { date: Date; otherMonth: boolean }) => {
     if (day.otherMonth) return;
     setSelectedDate(day.date);
     setShowCalendar(false);
   };
 
-  const isSelected = (day) =>
+  const isSelected = (day: { date: Date; otherMonth: boolean }) =>
     selectedDate &&
     day.date.toDateString() === selectedDate.toDateString();
 
